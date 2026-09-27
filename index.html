@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão Especial</title>
+    <link rel="icon" type="image/png" href="baby-shower.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TELA INICIAL -->
+    <div id="tela-inicial" class="fase">
+        <h1>Missão Super Secreta</h1>
+        <p>Vocês foram convocados para um desafio. Estão prontos?</p>
+        <button class="btn-play" onclick="mudarFase('tela-inicial', 'fase-forca')">▶ PRESS START</button>
+    </div>
+
+    <!-- FASE 1: FORCA -->
+    <div id="fase-forca" class="fase escondido">
+        <h2>Fase 1: O Enigma</h2>
+        <p>Descubra a palavra secreta para avançar.</p>
+
+        <div id="forca-status">Tentativas restantes: 6</div>
+
+        <canvas id="forca-canvas" width="200" height="200"></canvas>
+
+        <div id="palavra-secreta"></div>
+        <div id="teclado"></div>
+        <button id="btn-proxima-fase1" class="escondido" onclick="mudarFase('fase-forca', 'fase-stop')">Avançar para
+            Fase 2</button>
+    </div>
+
+    <!-- FASE 2: STOP -->
+    <div id="fase-stop" class="fase escondido">
+        <h2>Fase 2: Stop!</h2>
+
+        <div id="painel-stop" class="escondido">
+            <p>A letra sorteada foi:</p>
+            <div id="letra-stop">A</div>
+            <p id="tempo-stop">Tempo: 30s</p>
+
+            <div class="campos-stop">
+                <input type="text" id="input-nome" placeholder="NOME" autocomplete="off">
+                <input type="text" id="input-caracteristica" placeholder="VIRTUDE (Ex: Amor, Cuidado)" autocomplete="off">
+                <input type="text" id="input-objeto" placeholder="OBJETO PARA CRIANÇA" autocomplete="off">
+            </div>
+
+            <button id="btn-gritar-stop" onclick="avaliarStop()">GRITAR STOP!</button>
+        </div>
+
+        <p id="mensagem-stop"></p>
+        <button id="btn-iniciar-stop" onclick="iniciarStop()">Sortear Letra</button>
+        <button id="btn-proxima-fase2" class="escondido" onclick="mudarFase('fase-stop', 'fase-puzzle')">Avançar para
+            Fase 3</button>
+    </div>
+
+    <!-- FASE 3: PUZZLE -->
+    <div id="fase-puzzle" class="fase escondido">
+        <h2>Fase 3: A Imagem Misteriosa</h2>
+        <p>Monte a imagem antes que o tempo acabe!</p>
+
+        <p id="tempo-puzzle">Tempo: 01:30</p>
+
+        <div id="tabuleiro-puzzle"></div>
+
+        <p id="mensagem-puzzle"></p>
+        
+        <button id="btn-iniciar-puzzle" onclick="iniciarPuzzle()">Embaralhar e Começar!</button>
+        <button id="btn-dica-puzzle" class="escondido" onclick="alternarDicaPuzzle()" style="background: rgba(33, 150, 243, 0.3); border-color: #2196f3;">💡 Mostrar Números</button>
+        
+        <button id="btn-proxima-fase3" class="escondido" onclick="mudarFase('fase-puzzle', 'fase-pacman')">Avançar para Fase 4</button>
+        
+        <!-- NOVO: Botão de pular oficial após 3 erros -->
+        <button id="btn-pular-puzzle" class="escondido" onclick="pularPuzzleOficial()">Achou esse difícil? Temos um desafio maior mais a frente.</button>
+    </div>
+
+    <!-- FASE 4: PACMAN -->
+    <div id="fase-pacman" class="fase escondido">
+        <h2>Fase 4: A Fuga</h2>
+        <p>Fuja dos fantasmas e use as setas do teclado para coletar 15 pontos.</p>
+
+        <p id="placar-pacman" style="font-weight: bold; font-size: 20px; color: #f1c40f;">Pontos: 0 / 15</p>
+
+        <div id="tabuleiro-pacman"></div>
+
+        <p id="mensagem-pacman"></p>
+        <button id="btn-iniciar-pacman" onclick="iniciarPacman()" class="escondido">Tentar Novamente</button>
+        <button id="btn-proxima-fase4" class="escondido" onclick="mudarFase('fase-pacman', 'tela-final')">Finalizar
+            Jogo!</button>
+    </div>
+
+    <div id="tela-final" class="fase escondido">
+
+        <div id="final-etapa1">
+            <h2>Missão Concluída!</h2>
+            <p class="texto-emocionante">Parabéns! Vocês concluíram o jogo com maestria.</p>
+            <button onclick="mostrarAlertaLabirinto()">Ver Pontuação</button>
+        </div>
+
+        <div id="alerta-gigante" class="escondido">
+            <h1>ESPERA!</h1>
+            <p>Parece que o desafio ainda não acabou...</p>
+        </div>
+
+        <div id="final-etapa2-labirinto" class="escondido">
+            <h2>Fuja do Labirinto!</h2>
+            <p style="font-size: 14px; color: #bdc3c7;">Use as setas do teclado para guiar a bolinha vermelha até a saída azul.</p>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; width: max-content; margin: 15px auto; border: 2px dashed #673ab7; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+                <canvas id="canvas-labirinto" width="320" height="320"></canvas>
+            </div>
+            <div id="popup-derrota-labirinto" class="escondido">
+            <div class="conteudo-popup">
+                <h2>Ops! Bateu na parede!</h2>
+                <img src="errou.jpg" alt="Derrota" id="img-derrota">
+                <button onclick="reiniciarLabirinto()">Tentar Novamente</button>
+            </div>
+        </div>
+            <p id="mensagem-labirinto" style="color: #e74c3c; font-weight: bold; height: 20px;"></p>
+        </div>
+
+        <!-- ETAPA 3: VÍDEO -->
+        <div id="final-etapa3-video" class="escondido">
+            
+            <video id="video-homenagem" width="100%" controls playsinline preload="auto">
+                <source src="Filme convite.mp4" type="video/mp4">
+                Seu navegador não suporta este vídeo.
+            </video>
+        </div>
+
+        <!-- ETAPA 4: CONVITE / CARTA -->
+        <div id="final-etapa4-convite" class="escondido">
+            
+            <audio id="audio-homenagem">
+                <source src="e tao lindo.mp3" type="audio/mp3">
+            </audio>
+
+            <div id="convite-padrinhos">
+                
+                <div class="carta-fofa">
+            
+                    <img src="varinha-magica.png" alt="Varinha Mágica" class="decoracao icone-varinha">
+                    <img src="familia-adotiva.png" alt="Coração Família" class="decoracao icone-familia">
+                    <img src="baby-shower.png" alt="Convite Bebê" class="decoracao icone-convite">
+
+                    <img src="alice.jpg" alt="Alice" class="polaroid foto-alice">
+                    <img src="kalel.jpg" alt="Kalel" class="polaroid foto-kalel">
+                    <img src="eric.kalel2.jpg" alt="Eric e Kalel" class="polaroid foto-eric">
+
+                    <div class="borda-interna">
+                        <div class="titulo-carta">Caros Amigos,</div>
+                        
+                        <p class="texto-emocionante"><strong>Mica e San...</strong></p>
+                        
+                        <p class="texto-emocionante">A gente nunca foi de seguir roteiros prontos, e com a nossa família não seria diferente. Em mais de dez anos de amizade, desde a escola, passando por tantos momentos memoráveis, praias e churrascos e bebedeiras kkk, o que a gente construiu até aqui virou uma certeza absoluta: vocês são parte da nossa base.</p>
+                        
+                        <p class="texto-emocionante">Para nós, ser padrinho e madrinha não tem nada a ver com religião, tradições vazias, obrigações financeiras ou presentes. Suprir tudo isso é papel nosso, de pai e mãe. O que a gente quer de vocês é exatamente o que vocês já são na prática: um porto seguro.</p>
+                        
+                        <p class="texto-emocionante">A Alice e o Kalel não têm muitos laços de sangue da mesma idade, e pelo andar da carruagem, não terão com quem dividir a infância tão cedo <em>(então, por favor, façam a parte de vocês e comecem a crescer e multiplicar logo, kkkkkk!)</em>. Precisamos garantir que eles tenham ao lado a nossa família de coração, acompanhando de perto cada fase e cada descoberta deles.</p>
+                        
+                        <p class="texto-emocionante">No passado, a gente acabou quebrando a cara achando que título de sangue garantia presença. A vida nos ensinou o contrário. Vocês já participaram muito mais da vida da Alice do que pessoas que esperávamos que estivessem lá. E quando o Kalel chegou, vocês foram a nossa única e óbvia escolha desde o primeiro dia. Então, juntamos as peças: queremos vocês para os dois.</p>
+                        
+                        <p class="texto-emocionante">A gente admira demais a visão de mundo de vocês, a índole e a forma como levam a vida. Queremos que assumam esse papel não por obrigação, mas para ensinar, rir, somar e estarem presentes de verdade na jornada deles.</p>
+                        
+                        <p class="texto-emocionante"><strong>E Davi...</strong></p>
+                        
+                        <p class="texto-emocionante">Você não achou que a gente ia te colocar pra passar por todo esse jogo e esquecer de você no final, né?</p>
+                        
+                        <p class="texto-emocionante">Nós queríamos que você fizesse parte dessa missão de hoje, do início ao fim, porque você é gigante nas nossas vidas e está em todos os nossos melhores momentos. A escolha dos padrinhos teve a ver com um momento de vida muito específico e com o tipo de estrutura que esse título pede agora. Mas a gente quer deixar uma coisa muito clara pra você: o posto de "Tio Davi" é oficial, vitalício e insubstituível.</p>
+                        
+                        <p class="texto-emocionante">Aquele tio parceiro, que tem a nossa total confiança, que é da nossa família e que a gente sabe que vai estar lá pra ensinar as piores (e melhores!) brincadeiras. Obrigado por estar sempre junto, por ser esse cara foda e por fazer parte da nossa história.</p>
+                        
+                        <p class="texto-emocionante">Aliás, obrigado a todos vocês por estarem sempre com a gente. Amamos muito vocês!</p>
+                        
+                        <p class="texto-emocionante"><strong>Mas, voltando... Mica e San!</strong></p>
+                        
+                        <p class="texto-emocionante">A consideração que temos por vocês é imensa. A confiança é maior ainda. E o amor e o respeito, imensuráveis. Por isso, decidimos confiar essa tarefa, que é a mais importante das nossas vidas, a vocês.</p>
+                        
+                        <div class="bloco-assinaturas">
+                            Com muito amor,<br>
+                            <span class="assinatura-mao">Cinthia Gomes</span>
+                            <span class="assinatura-mao">Eric Elias Altão</span>
+                            <span class="assinatura-mao">Kalel Gomes Altão</span>
+                            <span class="assinatura-mao">Alice Gomes Altão</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIM DA CARTA -->
+
+                <img src="alice.kalel.jpg" alt="Kalel e Alice" id="foto-final">
+                <h3 class="pergunta-final"> Vocês topam essa missão com a Alice e o Kalel?</h3>
+                
+                <div class="botoes-resposta">
+                    <button onclick="aceitarConvite()">Sim, nós aceitamos!</button>
+                    <button onclick="aceitarConvite()">Com certeza! (Porque vocês não tem escolha)</button>
+                </div>
+                
+                <p id="mensagem-aceite" class="escondido">A melhor aventura de nossas vidas vai começar! ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÁUDIOS DE FUNDO PUXADOS DIRETOS DA INTERNET (SEM BAIXAR) -->
+    <audio id="musica-forca" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3" loop></audio>
+    <audio id="musica-stop" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3" loop></audio>
+    <audio id="musica-puzzle" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" loop></audio>
+    <audio id="musica-pacman" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
+    
+    <!-- Música do Labirinto (Tensão) -->
+    <audio id="musica-labirinto" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" loop></audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

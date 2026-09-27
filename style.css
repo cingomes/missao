@@ -1,0 +1,908 @@
+/* --- IMPORTANDO FONTE FOFA E ELEGANTE --- */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700;900&display=swap');
+
+/* --- TEMA VIVO COM OURO PULSANTE --- */
+body {
+    /* Fundo Espacial Retrô Escuro */
+    background-color: #0b0c10;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    color: #ecf0f1; 
+    font-family: 'Nunito', sans-serif; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 20px;
+}
+
+/* --- TELA INICIAL: ESTILO JOGO RETRÔ (SONIC / ARCADE) --- */
+#tela-inicial {
+    background: transparent; /* Remove a caixa branca chata */
+    border: none;
+    box-shadow: none;
+    animation: none; /* Tira o pulso da caixa para focar no logo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* O Logo Gigante em 3D */
+#tela-inicial h1 {
+    font-family: 'Arial Black', Impact, sans-serif; /* Fonte bem grossa */
+    font-size: 65px;
+    line-height: 1;
+    color: #f1c40f; /* Amarelo clássico */
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    
+    /* Efeito Sonic: inclinado e com contorno */
+    transform: skew(-5deg) rotate(-3deg); 
+    -webkit-text-stroke: 3px #ffffff; 
+    
+    /* Sombra 3D em camadas (Vermelho, Azul e Sombra escura) */
+    text-shadow:
+        4px 4px 0 #e74c3c,
+        8px 8px 0 #c0392b,
+        12px 12px 0 #2980b9,
+        16px 16px 0 #2c3e50,
+        20px 20px 20px rgba(0,0,0,0.9);
+}
+
+/* Ajuste do logo para o celular */
+@media (max-width: 600px) {
+    #tela-inicial h1 { font-size: 45px; -webkit-text-stroke: 2px #ffffff; }
+}
+
+#tela-inicial p {
+    font-size: 18px;
+    color: #ecf0f1;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 60px;
+    text-shadow: 2px 2px 4px #000;
+    font-weight: 900;
+}
+
+/* Botão estilo "PRESS START" clássico */
+#tela-inicial .btn-play {
+    background: transparent;
+    color: #ecf0f1;
+    border: none;
+    box-shadow: none;
+    font-size: 32px !important;
+    font-family: 'Arial Black', Impact, sans-serif;
+    letter-spacing: 5px;
+    padding: 0 !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    /* Pisca de 1 em 1 segundo de forma seca (step-end) como em jogos de Super Nintendo */
+    animation: piscar-press-start 1.2s step-end infinite;
+}
+
+#tela-inicial .btn-play:hover {
+    transform: scale(1.1);
+    color: #f1c40f;
+    text-shadow: 0 0 20px #f1c40f;
+}
+
+@keyframes piscar-press-start {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Animação do Brilho Dourado Pulsante */
+@keyframes pulso-dourado {
+    0% {
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.4), inset 0 0 5px rgba(212, 175, 55, 0.2);
+        border-color: #d4af37;
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 215, 0, 0.4);
+        border-color: #ffd700;
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.4), inset 0 0 5px rgba(212, 175, 55, 0.2);
+        border-color: #d4af37;
+    }
+}
+
+/* --- SUBSTITUIR A CLASSE .fase --- */
+.fase {
+    background-color: #0b0c10;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    padding: 40px; 
+    border-radius: 25px; 
+    text-align: center; 
+    max-width: 600px;
+    width: 100%;
+    border: 3px solid #d4af37; 
+    animation: pulso-dourado 2.5s infinite alternate; 
+}
+
+h1, h2 {
+    color: #c5a059; 
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* Leve sombra para destacar */
+}
+
+/* Estilo especial para o título da tela inicial (Cara de Game) */
+#tela-inicial h1 {
+    font-size: 45px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffd700;
+    -webkit-text-stroke: 1px #d4af37; /* Contorninho na letra */
+    text-shadow: 0px 4px 15px rgba(212, 175, 55, 0.6);
+}
+
+.escondido {
+    display: none !important;
+}
+
+/* --- BOTÕES PRINCIPAIS (ESTILO ARCADE NEON) --- */
+button {
+    background: rgba(103, 58, 183, 0.15); /* Fundo roxo translúcido estilo vidro */
+    color: #ecf0f1;
+    text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    border: 2px solid #9c27b0; /* Borda neon roxa */
+    padding: 15px 35px; 
+    font-size: 18px;
+    font-weight: 900;
+    border-radius: 50px; 
+    cursor: pointer; 
+    margin-top: 20px; 
+    box-shadow: 0 0 15px rgba(156, 39, 176, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 25px rgba(156, 39, 176, 0.7);
+    background: #9c27b0; 
+    color: #ffffff;
+    border-color: #e040fb; /* Borda acende ao passar o mouse */
+}
+
+/* Botão GIGANTE da Tela Inicial */
+.btn-play {
+    font-size: 26px !important;
+    padding: 20px 45px !important;
+    margin-top: 30px;
+    animation: pulso-dourado 1.5s infinite alternate; /* O botão de play pulsa mais rápido */
+    letter-spacing: 2px;
+}
+
+/* Botão de Pular Teste (Discreto para o fundo escuro) */
+.btn-pular {
+    background: transparent;
+    color: #7f8c8d; /* Cinza escuro */
+    font-size: 13px;
+    padding: 8px 15px;
+    margin-top: 20px;
+    box-shadow: none;
+    border: 1px dashed #576574;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    animation: none; 
+    text-transform: uppercase;
+}
+
+.btn-pular:hover {
+    background: rgba(255,255,255,0.05);
+    color: #bdc3c7; /* Fica clarinho no hover */
+    border-color: #bdc3c7;
+    box-shadow: none;
+    transform: translateY(0) scale(1);
+}
+
+/* --- FASE 1: FORCA --- */
+#forca-canvas {
+    background-color: rgba(255, 255, 255, 0.05); /* Translúcido para ver o espaço */
+    border-radius: 15px;
+    border: 2px dashed #673ab7;
+    margin: 15px auto;
+    display: block;
+}
+
+#palavra-secreta {
+    font-size: 35px;
+    letter-spacing: 12px;
+    margin: 30px 0;
+    font-weight: 900;
+    color: #c5a059;
+}
+
+#forca-status { font-size: 20px; font-weight: bold; color: #b8860b; }
+
+#teclado { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; }
+
+.tecla {
+    background-color: #fcf6e3;
+    color: #7a633f;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 4px 0 #eaddb6;
+    margin: 0;
+    border: 1px solid #fdf5df;
+}
+
+.tecla:active { transform: translateY(4px); box-shadow: none; }
+.tecla:disabled { background-color: #f4f1ea; color: #c2baba; box-shadow: none; transform: translateY(4px); cursor: not-allowed; border: none; }
+
+/* --- FASE 2: STOP --- */
+#painel-stop {
+    background-color: rgba(255, 255, 255, 0.05); 
+    padding: 30px;
+    border-radius: 20px;
+    border: 2px solid #673ab7;
+    margin-top: 20px;
+}
+
+#letra-stop {
+    font-size: 50px;
+    font-weight: 900;
+    color: #c5a059;
+    background-color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: 3px dashed #ebd698;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+#tempo-stop { color: #d4af37; font-weight: bold; font-size: 24px; margin-bottom: 20px; }
+
+.campos-stop { display: flex; flex-direction: column; gap: 15px; margin: 0 auto 30px auto; max-width: 350px; }
+
+.campos-stop input {
+    background-color: #ffffff;
+    border: 2px solid #eaddb6;
+    color: #5c4e41;
+    font-size: 18px;
+    padding: 15px;
+    border-radius: 15px;
+    outline: none;
+    text-transform: uppercase;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+}
+
+.campos-stop input:focus { border-color: #c5a059; }
+
+#btn-gritar-stop { 
+    background: #e91e63 !important; /* Rosa/Vermelho Neon */
+    color: #fff !important;
+    border: 2px solid #ff4081 !important;
+    box-shadow: 0 6px 0 #880e4f, 0 0 15px rgba(233, 30, 99, 0.4) !important; /* Efeito 3D de fliperama */
+}
+
+#btn-gritar-stop:hover {
+    background: #ff4081 !important;
+    box-shadow: 0 6px 0 #880e4f, 0 0 25px rgba(233, 30, 99, 0.8) !important;
+}
+
+#btn-gritar-stop:active:not(:disabled) { 
+    box-shadow: 0 0px 0 #880e4f, 0 0 10px rgba(233, 30, 99, 0.4) !important; 
+    transform: translateY(6px) !important; /* O botão "afunda" ao clicar */
+}
+
+/* --- FASE 3: PUZZLE (COM FOTO) --- */
+#tempo-puzzle { color: #d4af37; font-weight: bold; font-size: 24px; margin-bottom: 20px; }
+
+#tabuleiro-puzzle {
+    display: grid;
+    grid-template-columns: repeat(3, 100px); /* 3 colunas de 100px */
+    grid-template-rows: repeat(3, 100px);    /* 3 linhas de 100px */
+    gap: 2px; /* Espaço mínimo entre as peças para dar cara de puzzle */
+    margin: 20px auto;
+    width: max-content;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px dashed #673ab7;
+}
+
+.peca-puzzle {
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 4px 0 #4a238b;
+    user-select: none;
+    /* A imagem de fundo e a posição são inseridas dinamicamente pelo JS */
+}
+
+.peca-puzzle:active { 
+    transform: translateY(4px); 
+    box-shadow: none; 
+}
+
+.peca-vazia { 
+    background-color: transparent; 
+    cursor: default; 
+}
+
+/* --- FASE 4: PACMAN (ANIMADO) --- */
+#tabuleiro-pacman {
+    display: grid; grid-template-columns: repeat(10, 30px); grid-template-rows: repeat(10, 30px);
+    gap: 3px; margin: 20px auto;
+    background-color: #0f3460; padding: 10px; border-radius: 15px; width: max-content;
+    border: 3px solid #673ab7;
+}
+
+.celula-pacman { width: 30px; height: 30px; background-color: rgba(255,255,255,0.05); border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+
+/* Pacman abrindo e fechando a boca */
+.pacman {
+    background-color: #f1c40f;
+    border-radius: 50%;
+    width: 85%; height: 85%;
+    animation: chomp 0.3s linear infinite alternate;
+}
+@keyframes chomp {
+    0% { clip-path: polygon(100% 74%, 50% 50%, 100% 26%, 100% 0%, 0% 0%, 0% 100%, 100% 100%); }
+    100% { clip-path: polygon(100% 50%, 50% 50%, 100% 50%, 100% 0%, 0% 0%, 0% 100%, 100% 100%); }
+}
+
+/* Fantasminhas flutuando */
+.vilao {
+    background-color: #ff4757; /* Fantasma vermelho arcade */
+    border-radius: 50% 50% 10% 10%;
+    width: 85%; height: 85%;
+    position: relative;
+    animation: flutuar-fantasma 0.4s infinite alternate;
+}
+@keyframes flutuar-fantasma {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-4px); }
+}
+
+/* Pontinhos piscando/brilhando */
+.ponto {
+    background-color: #f4e8c1;
+    border-radius: 50%;
+    width: 35%; height: 35%;
+    animation: brilhar-ponto 0.5s infinite alternate;
+}
+@keyframes brilhar-ponto {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 5px #f4e8c1; }
+}
+
+/* --- TELA FINAL, ALERTA E VÍDEO --- */
+.texto-emocionante { font-size: 18px; line-height: 1.6; margin-bottom: 20px; }
+
+/* --- SUBSTITUIR O ALERTA GIGANTE (TELA DE ESPERA) --- */
+#alerta-gigante {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: #050000; 
+    color: white;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    z-index: 9999; text-align: center;
+    animation: sirene-vermelha 0.6s infinite alternate;
+}
+
+#alerta-gigante h1 { 
+    font-size: 110px; margin: 0; text-transform: uppercase; 
+    font-family: 'Arial Black', Impact, sans-serif;
+    color: #ff3333;
+    text-shadow: 0 0 30px #ff0000, 5px 5px 0px #880000;
+    animation: tremer-glitch 0.15s infinite;
+}
+
+#alerta-gigante p { 
+    font-size: 35px; font-weight: bold; 
+    text-shadow: 0 0 15px #ff0000;
+    margin-top: 20px;
+}
+
+@keyframes sirene-vermelha {
+    0% { box-shadow: inset 0 0 50px #550000; background-color: #050000; }
+    100% { box-shadow: inset 0 0 250px #ff0000; background-color: #1a0000; }
+}
+
+@keyframes tremer-glitch {
+    0% { transform: translate(2px, 1px) skew(0deg); }
+    20% { transform: translate(-2px, -2px) skew(-2deg); }
+    40% { transform: translate(1px, -1px) skew(1deg); }
+    60% { transform: translate(-1px, 2px) skew(0deg); }
+    80% { transform: translate(2px, -2px) skew(2deg); }
+    100% { transform: translate(-2px, 1px) skew(0deg); }
+}
+
+#video-homenagem { border-radius: 20px; box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15); border: 5px solid #fff; }
+
+/* --- CONVITE E CARTA FOFA --- */
+#convite-padrinhos { padding-top: 10px; }
+
+.carta-fofa {
+    background-color: #ffffff; /* Fundo branco como o quadro */
+    padding: 20px; /* Espaço externo da moldura */
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15); 
+    position: relative;
+    margin: 40px auto;
+    max-width: 95%;
+    border: 5px solid #faf9f6; /* Moldura externa sutil */
+    /* Você pode adicionar uma imagem de fundo com folhagens aqui depois */
+    /* background-image: url('folhas.png'); background-size: cover; */
+}
+
+/* Efeito de fita adesiva (Washi Tape) prendendo a carta no topo */
+.carta-fofa::before {
+    content: ''; 
+    position: absolute; 
+    top: -12px; /* Posição acima da borda pontilhada */
+    left: 50%; 
+    transform: translateX(-50%) rotate(-2deg);
+    width: 130px; 
+    height: 35px;
+    background-color: #f3e5ab; /* Fita adesiva bege claro/creme */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    z-index: 2; /* Garante que a fita fique por cima */
+}
+
+.borda-interna {
+    border: 2px dashed #d4af37; 
+    padding: 45px 55px 35px 55px; /* Aumentamos as laterais (55px) para afastar o texto das fotos */
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9); 
+    position: relative;
+}
+
+/* Garante que no celular o texto não fique espremido demais */
+@media (max-width: 768px) {
+    .borda-interna {
+        padding: 40px 20px 25px 20px; 
+    }
+}
+
+.titulo-carta {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: #5c4e41; /* Cor escura do texto principal */
+    text-align: center;
+    margin-top: -15px; /* Puxa o título um pouco para cima */
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.carta-fofa .texto-emocionante {
+    font-size: 17px; 
+    line-height: 1.8; 
+    margin-bottom: 20px; 
+    color: #5c4e41; 
+    text-align: center; /* Texto centralizado como no quadro */
+}
+
+/* --- FOTO FINAL ESTILO POLAROID --- */
+#foto-final { 
+    width: 100%; 
+    max-width: 250px; /* Tamanho reduzido para ficar mais delicado */
+    background-color: white;
+    padding: 10px 10px 35px 10px; /* Borda branca típica de Polaroid */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Sombra realista */
+    border-radius: 2px; 
+    border: 1px solid #eee; 
+    margin-bottom: 30px; 
+    transform: rotate(3deg); /* Leve inclinação para dar um charme de foto colada */
+}
+
+/* --- PERGUNTA FINAL E MENSAGEM DE ACEITE (NEON BRANCO) --- */
+.pergunta-final { 
+    color: #ffffff; /* Branco puro para super destaque */
+    font-size: 28px; 
+    margin-bottom: 25px; 
+    font-weight: 900; 
+    /* Sombra neon roxa que combina com os botões */
+    text-shadow: 0 0 15px rgba(156, 39, 176, 0.8), 0 2px 4px rgba(0,0,0,0.8); 
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+#mensagem-aceite { 
+    font-size: 26px; 
+    color: #ffffff; /* Branco radiante */
+    font-weight: 900; 
+    margin-top: 20px; 
+    /* Brilho neon rosa/branco vibrante para comemorar o "Sim" */
+    text-shadow: 0 0 20px rgba(233, 30, 99, 0.9), 0 0 10px rgba(255, 255, 255, 0.8); 
+    animation: pulsar 1.5s infinite; 
+    text-align: center;
+}
+
+/* --- POPUP LABIRINTO (TEMA ESPAÇO) --- */
+#popup-derrota-labirinto {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: rgba(11, 12, 16, 0.95);
+    display: flex; justify-content: center; align-items: center; z-index: 10000;
+}
+
+.conteudo-popup {
+    background-color: #1a1a2e; 
+    padding: 40px; border-radius: 25px; text-align: center;
+    border: 4px solid #673ab7; 
+    box-shadow: 0 15px 40px rgba(103, 58, 183, 0.3);
+    max-width: 400px; width: 90%;
+    color: #ecf0f1;
+}
+
+.conteudo-popup h2 { 
+    color: #f1c40f; 
+    margin-top: 0; font-size: 28px; 
+}
+
+#img-derrota { 
+    width: 100%; max-width: 250px; border-radius: 15px; margin: 15px 0; border: 2px solid #673ab7; 
+}
+
+/* --- ANIMAÇÕES --- */
+.confete { position: fixed; top: -10px; width: 10px; height: 10px; border-radius: 50%; z-index: 9999; animation: cair linear forwards; }
+@keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes cair { to { transform: translateY(100vh) rotate(720deg); } }
+
+/* --- DECORAÇÕES FLUTUANTES (FLATICON) --- */
+.decoracao {
+    position: absolute;
+    z-index: 5; 
+    pointer-events: none; 
+    animation: flutuar-icone 3s ease-in-out infinite alternate;
+    opacity: 0.85; 
+}
+
+/* --- SUBSTITUIR AS POSIÇÕES DOS ÍCONES DA CARTA --- */
+.icone-varinha {
+    top: 15px;
+    left: 15px;
+    width: 60px;
+    transform: rotate(-15deg);
+}
+
+.icone-familia {
+    top: 45%;
+    right: 15px;
+    width: 65px;
+    transform: rotate(10deg);
+    animation-delay: 0.5s; 
+}
+
+.icone-convite {
+    bottom: -15px;
+    left: -25px;
+    width: 80px;
+    transform: rotate(-10deg);
+    animation-delay: 1s;
+}
+
+/* Animação de flutuação vertical */
+@keyframes flutuar-icone {
+    0% { margin-top: 0px; }
+    100% { margin-top: -15px; }
+}
+
+/* --- ESTILO DAS FOTOS POLAROID (AFASTADAS DO TEXTO) --- */
+.polaroid {
+    position: absolute;
+    background-color: white;
+    padding: 8px 8px 25px 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); 
+    z-index: 6; 
+    border-radius: 2px;
+    border: 1px solid #eee;
+    pointer-events: none; 
+}
+
+/* Posições das Polaroids na carta - Valores negativos maiores para afastar do texto */
+.foto-alice {
+    top: 5%;
+    left: -95px; /* Mais para fora */
+    width: 115px; /* Um pouco menor */
+    transform: rotate(-8deg); 
+}
+
+.foto-kalel {
+    bottom: 25%;
+    right: -100px; /* Mais para fora */
+    width: 125px;
+    transform: rotate(12deg); 
+}
+
+.foto-eric {
+    top: 50%;
+    left: -85px; /* Mais para fora */
+    width: 105px;
+    transform: rotate(-15deg); 
+}
+
+/* Ajuste inteligente para telas menores (celulares) para as fotos não vazarem ou cobrirem o texto */
+@media (max-width: 768px) {
+    .polaroid {
+        width: 80px; 
+        padding: 5px 5px 15px 5px;
+    }
+    .foto-alice { left: -20px; top: 2%; }
+    .foto-kalel { right: -25px; bottom: 15%; }
+    .foto-eric { left: -15px; top: 40%; }
+}
+
+/* --- ESTILO DAS ASSINATURAS À MÃO --- */
+.bloco-assinaturas {
+    margin-top: 50px;
+    text-align: right; 
+    font-size: 18px;
+    color: #5c4e41;
+    padding-right: 20px;
+}
+
+.assinatura-mao {
+    display: block;
+    font-family: 'Dancing Script', cursive; 
+    font-size: 24px; /* Fonte reduzida para ficar delicada */
+    color: #c5a059; 
+    line-height: 1.3;
+    transform: rotate(-4deg); 
+    margin-top: 3px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05); 
+}
+
+/* --- TODAS AS FASES NO ESTILO ARCADE (ESCURO DA FASE 4) --- */
+
+/* Aplica o fundo escuro imersivo e o pulso neon para todas as fases */
+#fase-forca, #fase-stop, #fase-puzzle, #fase-pacman {
+    background-color: #1a1a2e; 
+    color: #ecf0f1; 
+    animation: pulso-arcade 1.5s infinite alternate; 
+    border-color: #673ab7;
+}
+
+/* Todos os títulos dourados e brilhantes (Estilo Pacman) */
+#fase-forca h2, #fase-stop h2, #fase-puzzle h2, #fase-pacman h2 {
+    color: #f1c40f;
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+}
+
+/* Textos secundários, tempos e dicas na cor branca/clara */
+#fase-forca p, #fase-stop p, #fase-puzzle p, #fase-pacman p,
+#tempo-stop, #tempo-puzzle, #placar-pacman {
+    color: #ecf0f1 !important;
+}
+
+/* --- AJUSTES PARA OS ELEMENTOS FICAREM BONITOS NO ESCURO --- */
+
+/* 1. Ajuste visual para o STOP */
+.campos-stop input {
+    background-color: rgba(255, 255, 255, 0.08); /* Fundo de vidro */
+    color: #ffffff;
+    border: 2px solid #673ab7;
+}
+.campos-stop input:focus { border-color: #f1c40f; }
+#letra-stop { 
+    background-color: #1a1a2e; 
+    color: #f1c40f; 
+    border-color: #673ab7; 
+}
+
+/* 2. Ajuste visual para a FORCA */
+#palavra-secreta { color: #ffffff; }
+.tecla { 
+    background-color: rgba(103, 58, 183, 0.2); 
+    color: #ffffff; 
+    border: 1px solid #673ab7; 
+    box-shadow: 0 3px 0 #4a238b;
+}
+.tecla:disabled { 
+    background-color: #0f101a; 
+    color: #444; 
+    box-shadow: none; 
+    border: 1px solid #333;
+}
+#forca-canvas { 
+    background-color: transparent; 
+    border-color: #673ab7; 
+}
+
+/* 3. Ajuste visual para o PUZZLE */
+#tabuleiro-puzzle { 
+    background-color: #0f101a; 
+    border-color: #673ab7; 
+}
+.peca-puzzle { 
+    background-color: #673ab7; 
+    color: white; 
+    box-shadow: 0 4px 0 #4a238b; 
+}
+
+/* --- TELA FINAL (MISSÃO CONCLUÍDA) - ESTILO JOGO RETRÔ --- */
+
+/* Remove a caixa branca da tela final para mostrar o espaço */
+#tela-final {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    animation: none;
+}
+
+#final-etapa1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10vh; /* Ajuda a centralizar na tela */
+}
+
+/* Título 3D "Missão Concluída" */
+#final-etapa1 h2 {
+    font-family: 'Arial Black', Impact, sans-serif;
+    font-size: 55px;
+    line-height: 1.1;
+    color: #f1c40f;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    
+    /* Efeito de inclinação e contorno */
+    transform: skew(-5deg) rotate(-3deg);
+    -webkit-text-stroke: 2px #ffffff;
+    
+    /* Sombra 3D em camadas */
+    text-shadow:
+        4px 4px 0 #e74c3c,
+        8px 8px 0 #c0392b,
+        12px 12px 0 #2980b9,
+        16px 16px 0 #2c3e50,
+        20px 20px 20px rgba(0,0,0,0.9);
+}
+
+/* Ajuste do título para telas de celular */
+@media (max-width: 600px) {
+    #final-etapa1 h2 { font-size: 38px; -webkit-text-stroke: 1px #ffffff; }
+}
+
+/* Texto de parabéns */
+#final-etapa1 p {
+    font-size: 18px;
+    color: #ecf0f1 !important; /* Força o texto a ficar branco e legível */
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 4px #000;
+    font-weight: 900;
+    text-align: center;
+}
+
+/* Botão "Ver Pontuação" estilo Fliperama Piscante */
+#final-etapa1 button {
+    background: transparent;
+    color: #ecf0f1;
+    border: none;
+    box-shadow: none;
+    font-size: 28px;
+    font-family: 'Arial Black', Impact, sans-serif;
+    letter-spacing: 3px;
+    padding: 0;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    /* Usa a mesma animação de piscar do botão "Start" */
+    animation: piscar-press-start 1.2s step-end infinite;
+}
+
+#final-etapa1 button:hover {
+    transform: scale(1.1);
+    color: #f1c40f;
+    text-shadow: 0 0 20px #f1c40f;
+}
+/* --- VÍDEO EM TELA CHEIA --- */
+#final-etapa3-video:not(.escondido) {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    background-color: #000;
+    z-index: 10500; /* Fica por cima de tudo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#video-homenagem {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    object-fit: contain; /* Garante que o vídeo não seja cortado */
+    background-color: #000;
+}
+
+/* Ajusta o botão de pular para flutuar no canto inferior do vídeo */
+#final-etapa3-video .btn-pular {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 10px 20px;
+    z-index: 10600;
+}
+
+/* --- AMPLIAR A TELA DO CONVITE E A CARTA --- */
+#tela-final {
+    max-width: 950px !important; /* Quebra o limite de 600px do resto do jogo */
+    width: 100%;
+}
+
+#final-etapa4-convite {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carta-fofa {
+    width: 100%;
+    max-width: 900px; /* Deixa a carta consideravelmente mais larga */
+}
+
+/* Dá ainda mais respiro lateral para o texto na versão de computador */
+@media (min-width: 769px) {
+    .borda-interna {
+        padding: 60px 100px 50px 100px; /* Margens internas maiores para o texto não ficar colado nas bordas */
+    }
+}
+
+/* --- BOTÕES DO CONVITE (ESTILO NEON ESPACIAL) --- */
+.botoes-resposta {
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.botoes-resposta button {
+    background: rgba(103, 58, 183, 0.15) !important; /* Roxo translúcido estilo vidro escuro */
+    color: #ecf0f1 !important;
+    border: 2px solid #9c27b0 !important; /* Borda neon roxa */
+    padding: 15px 30px !important; 
+    font-size: 16px !important; 
+    font-weight: 900 !important;
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgba(156, 39, 176, 0.4) !important; /* Brilho neon suave */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.botoes-resposta button:hover {
+    background: #9c27b0 !important; /* Preenche de roxo ao passar o mouse */
+    color: #ffffff !important;
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 0 30px rgba(156, 39, 176, 0.8) !important; /* Brilho neon forte */
+    border-color: #e040fb !important; /* Borda fica mais clara e vibrante */
+}
